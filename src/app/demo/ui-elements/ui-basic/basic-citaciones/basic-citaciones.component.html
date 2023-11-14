@@ -1,0 +1,262 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Agendar una cita..." [options]="false">
+      <div class="row">
+        <form
+          action="javascript:"
+          class="was-validated"
+          [formGroup]="citationForm"
+          (ngSubmit)="addCitation($event)"
+        >
+          <div class="row">
+            <div class="col-md-4">
+              <label for="citation_date" class="form-label">Fecha</label>
+              <input
+                type="date"
+                class="form-control is-invalid"
+                required
+                id="citation_date"
+                formControlName="citation_date"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="description" class="form-label">Description</label>
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="description"
+                placeholder="¿A qué bienes? ó ¿Por qué bienes?"
+                formControlName="description"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputGroupSelect01" class="form-label"
+                >Elegir psicólogo</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01"
+                    >Elige</label
+                  >
+                </div>
+                <select
+                  class="form-select"
+                  id="inputGroupSelect02"
+                  formControlName="psychologist_id"
+                >
+                  <option
+                    *ngFor="let psycho of psychosData"
+                    [value]="psycho.user_id"
+                  >
+                    {{ psycho.name }} {{ psycho.middlename }}
+                    {{ psycho.first_lastname }} {{ psycho.second_lastname }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputGroupSelect01" class="form-label"
+                >Elegir pasiente</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01"
+                    >Elige</label
+                  >
+                </div>
+                <select
+                  class="form-select"
+                  id="inputGroupSelect02"
+                  formControlName="patient_id"
+                >
+                  <option
+                    *ngFor="let patient of patientsData"
+                    [value]="patient.user_id"
+                  >
+                    {{ patient.name }} {{ patient.middlename }}
+                    {{ patient.first_lastname }} {{ patient.second_lastname }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 mt-3">
+              <button class="btn btn-primary shadow" type="submit">
+                Guardar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+
+  <div class="col-md-12">
+    <app-card cardTitle="Lista de cítas" [options]="false">
+      <div class="table-responsive">
+        <a (click)="getCitation()"><i class="fa-solid fa-rotate-right"></i></a>
+        <table class="table display" id="yourTableId">
+          <thead>
+            <tr>
+              <th scope="col">Fecha</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Psicólogo</th>
+              <th scope="col">Paciente</th>
+              <th scope="col">Estado</th>
+              <th>Acciones</th>
+              <!-- <th scope="col">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let citation of citationsData">
+              <td>{{ citation?.citation_date }}</td>
+              <td>{{ citation?.description }}</td>
+              <td>{{ citation?.psychologist_id }}</td>
+              <td>{{ citation?.patient_id }}</td>
+              <td>{{ citation?.status }}</td>
+              <td>
+                <div class="row">
+                  <div class="col-md-6">
+                    <a
+                      (click)="showDialog(citation)"
+                      class="btn btn-primary"
+                      style="max-width: 40px; margin: 0 auto"
+                    >
+                      <i
+                        class="fa-solid fa-pen-to-square"
+                        style="color: #ffffff; margin: 0 auto"
+                      ></i>
+                    </a>
+                    <p-dialog
+                      header="Actualizar con fecha {{
+                        selectedCitation.citation_date
+                      }}"
+                      [(visible)]="visible"
+                      [modal]="true"
+                      [style]="{ width: '70vw', height: '100vw' }"
+                      [draggable]="false"
+                      [resizable]="false"
+                    >
+                      <form
+                        action=""
+                        [formGroup]="updateFormGroup"
+                        (ngSubmit)="updateCitation()"
+                      >
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="citation_date" class="form-label"
+                              >Fecha</label
+                            >
+                            <input
+                              type="date"
+                              class="form-control is-invalid"
+                              required
+                              id="citation_date"
+                              formControlName="citation_date"
+                            />
+                          </div>
+
+                          <div class="col-md-4">
+                            <label for="description" class="form-label"
+                              >Description</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control is-invalid"
+                              required
+                              id="description"
+                              placeholder="¿A qué bienes? ó ¿Por qué bienes?"
+                              formControlName="description"
+                            />
+                          </div>
+
+                          <div class="col-md-4">
+                            <label for="inputGroupSelect01" class="form-label"
+                              >Elegir psicólogo</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <label
+                                  class="input-group-text"
+                                  for="inputGroupSelect01"
+                                  >Elige</label
+                                >
+                              </div>
+                              <select
+                                class="form-select"
+                                id="inputGroupSelect02"
+                                formControlName="psychologist_id"
+                              >
+                                <option
+                                  *ngFor="let psycho of psychosData"
+                                  [value]="psycho.user_id"
+                                >
+                                  {{ psycho.name }} {{ psycho.middlename }}
+                                  {{ psycho.first_lastname }}
+                                  {{ psycho.second_lastname }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <label for="inputGroupSelect01" class="form-label"
+                              >Elegir pasiente</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <label
+                                  class="input-group-text"
+                                  for="inputGroupSelect01"
+                                  >Elige</label
+                                >
+                              </div>
+                              <select
+                                class="form-select"
+                                id="inputGroupSelect02"
+                                formControlName="patient_id"
+                              >
+                                <option
+                                  *ngFor="let patient of patientsData"
+                                  [value]="patient.user_id"
+                                >
+                                  {{ patient.name }} {{ patient.middlename }}
+                                  {{ patient.first_lastname }}
+                                  {{ patient.second_lastname }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-12 mt-3">
+                            <button
+                              class="btn btn-primary shadow"
+                              type="submit"
+                            >
+                              Guardar
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </p-dialog>
+                  </div>
+                  <div class="col-md-6">
+                    <a class="btn btn-danger" style="max-width: 40px">
+                      <i
+                        class="fa-solid fa-trash"
+                        style="color: #ffffff"
+                        (click)="deleteCitation(citation)"
+                      ></i>
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

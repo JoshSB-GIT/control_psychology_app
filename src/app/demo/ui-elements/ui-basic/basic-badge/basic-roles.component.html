@@ -1,0 +1,149 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Usuarios" [options]="false">
+      <div class="row">
+        <form
+          action="javascript:"
+          class="was-validated"
+          [formGroup]="rolesForm"
+          (ngSubmit)="addRoles($event)"
+        >
+          <div class="row">
+            <div class="col-md-4">
+              <label for="name" class="form-label">Nombre del rol</label>
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="name"
+                placeholder="Ingrese su nombre"
+                formControlName="name"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="description" class="form-label">Descripción</label>
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="description"
+                placeholder="Ingrese su segundo nombre"
+                formControlName="description"
+              />
+            </div>
+
+          <div class="col-md-12 mt-3">
+            <button class="btn btn-primary shadow" type="submit">
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+
+  <div class="col-md-12">
+    <app-card cardTitle="Lista de usuarios" [options]="false">
+      <div class="table-responsive">
+        <a (click)="getRoles()"><i class="fa-solid fa-rotate-right"></i></a>
+        <table class="table display" id="yourTableId">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Estado</th>
+              <th>Acciones</th>
+              <!-- <th scope="col">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rol of rolesData">
+              <td>{{ rol?.name }}</td>
+              <td>{{ rol?.description }}</td>
+              <td>{{ rol?.status }}</td>
+              <td>
+                <div class="row">
+                  <div class="col-md-6">
+                    <a
+                      (click)="showDialog(rol)"
+                      class="btn btn-primary"
+                      style="max-width: 40px; margin: 0 auto"
+                    >
+                      <i
+                        class="fa-solid fa-pen-to-square"
+                        style="color: #ffffff; margin: 0 auto"
+                      ></i>
+                    </a>
+                    <p-dialog
+                      header="Actualizar el rol {{ selectedRol.name }}"
+                      [(visible)]="visible"
+                      [modal]="true"
+                      [style]="{ width: '70vw', height: '100vw' }"
+                      [draggable]="false"
+                      [resizable]="false"
+                    >
+                      <div class="row">
+                        <form
+                          action="javascript:"
+                          class="was-validated"
+                          [formGroup]="updateFormGroup"
+                          (ngSubmit)="updateRol()"
+                        >
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="name" class="form-label">Nombre del rol</label>
+                            <input
+                              type="text"
+                              class="form-control is-invalid"
+                              required
+                              id="name"
+                              placeholder="Ingrese el nombre del rol"
+                              formControlName="name"
+                            />
+                          </div>
+              
+                          <div class="col-md-4">
+                            <label for="description" class="form-label">Descripción</label>
+                            <input
+                              type="text"
+                              class="form-control is-invalid"
+                              required
+                              id="description"
+                              placeholder="¿De qué trata ese rol?"
+                              formControlName="description"
+                            />
+                          </div>
+              
+                        <div class="col-md-12 mt-3">
+                          <button class="btn btn-primary shadow" type="submit">
+                            Guardar
+                          </button>
+                        </div>
+
+                          <div class="col-md-12 mt-3">
+                            <button
+                              class="btn btn-primary shadow"
+                              type="submit"
+                            >
+                              Guardar
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </p-dialog>
+                  </div>
+                  <div class="col-md-6">
+                    <a class="btn btn-danger" style="max-width: 40px">
+                      <i class="fa-solid fa-trash" style="color: #ffffff" (click)="deleteRol(user)"></i>
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

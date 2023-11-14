@@ -1,0 +1,486 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Usuarios" [options]="false">
+      <div class="row">
+        <form
+          action="javascript:"
+          class="was-validated"
+          [formGroup]="usersForm"
+          (ngSubmit)="addUser($event)"
+        >
+          <div class="row">
+            <div class="col-md-4">
+              <label for="name" class="form-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="name"
+                placeholder="Ingrese su nombre"
+                formControlName="name"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="middlename" class="form-label">Segundo Nombre</label>
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="middlename"
+                placeholder="Ingrese su segundo nombre"
+                formControlName="middlename"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="first_lastname" class="form-label"
+                >Primer Apellido</label
+              >
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="first_lastname"
+                placeholder="Ingrese su primer apellido"
+                formControlName="first_lastname"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="second_lastname" class="form-label"
+                >Segundo Apellido</label
+              >
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="second_lastname"
+                placeholder="Ingrese su segundo apellido"
+                formControlName="second_lastname"
+              />
+            </div>
+
+            <!-- Agrega más campos según sea necesario -->
+
+            <div class="col-md-4">
+              <label for="identification" class="form-label"
+                >Identificación</label
+              >
+              <input
+                type="number"
+                class="form-control is-invalid"
+                required
+                id="identification"
+                placeholder="Ingrese su número de identificación"
+                formControlName="identification"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="age" class="form-label">Edad</label>
+              <input
+                type="number"
+                class="form-control is-invalid"
+                required
+                id="age"
+                placeholder="Ingrese su edad"
+                formControlName="age"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="telephone" class="form-label">Teléfono</label>
+              <input
+                type="tel"
+                class="form-control is-invalid"
+                required
+                id="telephone"
+                placeholder="Ingrese su número de teléfono"
+                formControlName="telephone"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="phone" class="form-label">Celular</label>
+              <input
+                type="tel"
+                class="form-control is-invalid"
+                required
+                id="phone"
+                placeholder="Ingrese su número de celular"
+                formControlName="phone"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputGroupSelect01" class="form-label"
+                >Tipo de documento</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01"
+                    >Elige</label
+                  >
+                </div>
+                <select
+                  class="form-select"
+                  id="inputGroupSelect02"
+                  formControlName="document_type_id"
+                >
+                  <option
+                    *ngFor="let dct of documentTypeData"
+                    [value]="dct.document_type_id"
+                  >
+                    {{ dct.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputGroupSelect01" class="form-label"
+                >Rol de usuario</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01"
+                    >Elige</label
+                  >
+                </div>
+                <select
+                  class="form-select"
+                  id="inputGroupSelect01"
+                  formControlName="rol_id"
+                >
+                  <option *ngFor="let rol of rolesData" [value]="rol.rol_id">
+                    {{ rol.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="name" class="form-label">Nombre de usuario</label>
+              <input
+                type="text"
+                class="form-control is-invalid"
+                required
+                id="name"
+                placeholder="Ingrese su nombre de usuario"
+                formControlName="username"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label for="inputPassword5">Contraseña</label>
+              <input
+                type="password"
+                id="inputPassword5"
+                class="form-control mt-2 is-invalid"
+                aria-describedby="passwordHelpBlock"
+                formControlName="password"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-12 mt-3">
+            <button class="btn btn-primary shadow" type="submit">
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+
+  <div class="col-md-12">
+    <app-card cardTitle="Lista de usuarios" [options]="false">
+      <div class="table-responsive">
+        <a (click)="getUsers()"><i class="fa-solid fa-rotate-right"></i></a>
+        <table class="table display" id="yourTableId">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Segundo nombre</th>
+              <th scope="col">Primer apellido</th>
+              <th scope="col">Segundo apellido</th>
+              <th scope="col">Identificación</th>
+              <th scope="col">Edad</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Celular</th>
+              <th>Acciones</th>
+              <!-- <th scope="col">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of usersData">
+              <td>{{ user?.name }}</td>
+              <td>{{ user?.middlename }}</td>
+              <td>{{ user?.first_lastname }}</td>
+              <td>{{ user?.second_lastname }}</td>
+              <td>{{ user?.identification }}</td>
+              <td>{{ user?.age }}</td>
+              <td>{{ user?.telephone }}</td>
+              <td>{{ user?.phone }}</td>
+              <td>
+                <div class="row">
+                  <div class="col-md-6">
+                    <a
+                      (click)="showDialog(user)"
+                      class="btn btn-primary"
+                      style="max-width: 40px; margin: 0 auto"
+                    >
+                      <i
+                        class="fa-solid fa-pen-to-square"
+                        style="color: #ffffff; margin: 0 auto"
+                      ></i>
+                    </a>
+                    <p-dialog
+                      header="Actualizar el usuario {{ selectedUser.name }} {{
+                        selectedUser.first_lastname
+                      }}"
+                      [(visible)]="visible"
+                      [modal]="true"
+                      [style]="{ width: '70vw', height: '100vw' }"
+                      [draggable]="false"
+                      [resizable]="false"
+                    >
+                      <div class="row">
+                        <form
+                          action="javascript:"
+                          class="was-validated"
+                          [formGroup]="updateFormGroup"
+                          (ngSubmit)="updateUsers()"
+                        >
+                          <div class="row">
+                            <div class="col-md-4">
+                              <label for="name" class="form-label"
+                                >Nombre</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control is-invalid"
+                                required
+                                id="name"
+                                placeholder="Ingrese su nombre"
+                                formControlName="name"
+                                value="{{ selectedUser.name }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="middlename" class="form-label"
+                                >Segundo Nombre</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control is-invalid"
+                                required
+                                id="middlename"
+                                placeholder="Ingrese su segundo nombre"
+                                formControlName="middlename"
+                                value="{{ selectedUser.middlename }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="first_lastname" class="form-label"
+                                >Primer Apellido</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control is-invalid"
+                                required
+                                id="first_lastname"
+                                placeholder="Ingrese su primer apellido"
+                                formControlName="first_lastname"
+                                value="{{ selectedUser.first_lastname }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="first_lastname" class="form-label"
+                                >Segundo Apellido</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control is-invalid"
+                                required
+                                id="first_lastname"
+                                placeholder="Ingrese su segundo apellido"
+                                formControlName="second_lastname"
+                                value="{{ selectedUser.second_lastname }}"
+                              />
+                            </div>
+
+                            <!-- Agrega más campos según sea necesario -->
+
+                            <div class="col-md-4">
+                              <label for="identification" class="form-label"
+                                >Identificación</label
+                              >
+                              <input
+                                type="number"
+                                class="form-control is-invalid"
+                                required
+                                id="identification"
+                                placeholder="Ingrese su número de identificación"
+                                formControlName="identification"
+                                value="{{ selectedUser.identification }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="age" class="form-label">Edad</label>
+                              <input
+                                type="number"
+                                class="form-control is-invalid"
+                                required
+                                id="age"
+                                placeholder="Ingrese su edad"
+                                formControlName="age"
+                                value="{{ selectedUser.age }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="telephone" class="form-label"
+                                >Teléfono</label
+                              >
+                              <input
+                                type="tel"
+                                class="form-control is-invalid"
+                                required
+                                id="telephone"
+                                placeholder="Ingrese su número de teléfono"
+                                formControlName="telephone"
+                                value="{{ selectedUser.telephone }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="phone" class="form-label"
+                                >Celular</label
+                              >
+                              <input
+                                type="tel"
+                                class="form-control is-invalid"
+                                required
+                                id="phone"
+                                placeholder="Ingrese su número de celular"
+                                formControlName="phone"
+                                value="{{ selectedUser.phone }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="inputGroupSelect01" class="form-label"
+                                >Tipo de documento</label
+                              >
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <label
+                                    class="input-group-text"
+                                    for="inputGroupSelect01"
+                                    >Elige</label
+                                  >
+                                </div>
+                                <select
+                                  class="form-select"
+                                  id="inputGroupSelect01"
+                                  formControlName="document_type_id"
+                                >
+                                  <option
+                                    *ngFor="let dtd of documentTypeData"
+                                    [ngValue]="selectedUser.document_type_id"
+                                    [value]="selectedUser.document_type_id"
+                                  >
+                                    {{ dtd.name }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="inputGroupSelect01" class="form-label"
+                                >Rol de usuario</label
+                              >
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <label
+                                    class="input-group-text"
+                                    for="inputGroupSelect01"
+                                    >Elige</label
+                                  >
+                                </div>
+                                <select
+                                  class="form-select"
+                                  id="inputGroupSelect01"
+                                  formControlName="rol_id"
+                                >
+                                  <option
+                                    *ngFor="let rol of rolesData"
+                                    [ngValue]="selectedUser.rol_id"
+                                    [value]="selectedUser.rol_id"
+                                  >
+                                    {{ rol.name }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="username" class="form-label"
+                                >Nombre de usuario</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control is-invalid"
+                                required
+                                id="username"
+                                placeholder="Ingrese su nombre de usuario"
+                                formControlName="username"
+                                value="{{ selectedUser.username }}"
+                              />
+                            </div>
+
+                            <div class="col-md-4">
+                              <label for="inputPassword5">Contraseña</label>
+                              <input
+                                type="password"
+                                id="inputPassword5"
+                                class="form-control mt-2 is-invalid"
+                                aria-describedby="passwordHelpBlock"
+                                formControlName="password"
+                                value="{{ selectedUser.password }}"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-md-12 mt-3">
+                            <button
+                              class="btn btn-primary shadow"
+                              type="submit"
+                            >
+                              Guardar
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </p-dialog>
+                  </div>
+                  <div class="col-md-6">
+                    <a class="btn btn-danger" style="max-width: 40px">
+                      <i class="fa-solid fa-trash" style="color: #ffffff" (click)="deleteUser(user)"></i>
+                    </a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Historial" [options]="false">
+      <div class="table-responsive">
+        <a (click)="getHystory()"><i class="fa-solid fa-rotate-right"></i></a>
+        <table class="table display" id="yourTableId">
+          <thead>
+            <tr>
+              <th scope="col">Pasiente</th>
+              <th scope="col">Psicólogo</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Creación</th>
+              <!-- <th scope="col">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let history of historysData">
+              <td>{{ history?.patient_id }}</td>
+              <td>{{ history?.psychologist_id }}</td>
+              <td>{{ history?.status }}</td>
+              <td>{{ history?.create_at }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

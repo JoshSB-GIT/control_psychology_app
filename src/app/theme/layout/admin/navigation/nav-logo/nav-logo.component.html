@@ -1,0 +1,21 @@
+<div class="">
+  <a [routerLink]="['/dashboard/default/']" class="b-brand">
+    <div class="border rounded bg-light">
+      <img
+          src="../../../../../assets/images/logo-03-removebg-preview.png"
+          alt=""
+          width="40px"
+          height="40px"
+        />
+    </div>
+    <span class="b-title">Bienestar CUL</span>
+  </a>
+  <a
+    href="javascript:"
+    class="mobile-menu"
+    [ngClass]="{ on: navCollapsed }"
+    id="mobile-collapse"
+    (click)="navCollapse()"
+    ><span></span
+  ></a>
+</div>

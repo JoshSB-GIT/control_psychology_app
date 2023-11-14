@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="mb-3">Resultados</h5>
+        <div class="row">
+          <form
+            action="javascript:"
+            class="was-validated"
+            [formGroup]="resultForm"
+            (ngSubmit)="addResult($event)"
+          >
+            <div class="row">
+              <div class="col-md-12">
+                <label for="feedback" class="form-label">Descripción</label>
+                <textarea
+                  type="text"
+                  class="form-control is-invalid"
+                  required
+                  id="feedback"
+                  placeholder="¿Qué veredicto tienes?"
+                  formControlName="feedback"
+                ></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="rating" class="form-label">Rating</label>
+                <input
+                  type="number"
+                  class="form-control is-invalid"
+                  required
+                  id="rating"
+                  formControlName="rating"
+                />
+              </div>
+              <div class="col-md-4">
+                <label for="inputGroupSelect01" class="form-label"
+                  >Elegir psicólogo</label
+                >
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01"
+                      >Elige</label
+                    >
+                  </div>
+                  <select
+                    class="form-select"
+                    id="inputGroupSelect02"
+                    formControlName="appointment_id"
+                  >
+                    <option
+                      *ngFor="let citation of citationsData"
+                      [value]="citation.citation_id"
+                    >
+                      {{ citation.citation_date }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mt-3">
+              <button class="btn btn-primary shadow" type="submit">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <app-card cardTitle="Lista de resultados" [options]="false">
+      <div class="table-responsive">
+        <a (click)="getResults()"><i class="fa-solid fa-rotate-right"></i></a>
+        <table class="table display" id="yourTableId">
+          <thead>
+            <tr>
+              <th scope="col">Cita</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Retroalimentación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of resultsData">
+              <td>{{ result?.appointment_id }}</td>
+              <td>{{ result?.rating }}</td>
+              <td>{{ result?.feedback }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

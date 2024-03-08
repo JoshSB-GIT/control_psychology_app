@@ -73,7 +73,16 @@
   <div class="col-md-12">
     <app-card cardTitle="Lista de resultados" [options]="false">
       <div class="table-responsive">
-        <a (click)="getResults()"><i class="fa-solid fa-rotate-right"></i></a>
+        <div class="row my-3">
+          <div class="col-6">
+            <a (click)="getResults()"
+              ><i class="fa-solid fa-rotate-right"></i
+            ></a>
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <a (click)="generateReport()"><i class="fa-solid fa-file"></i></a>
+          </div>
+        </div>
         <table class="table display" id="yourTableId">
           <thead>
             <tr>

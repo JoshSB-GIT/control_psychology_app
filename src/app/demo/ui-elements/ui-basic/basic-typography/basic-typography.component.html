@@ -2,7 +2,75 @@
   <div class="col-sm-12">
     <app-card cardTitle="Historial" [options]="false">
       <div class="table-responsive">
-        <a (click)="getHystory()"><i class="fa-solid fa-rotate-right"></i></a>
+        <div class="row my-3">
+          <div class="col-6">
+            <a (click)="getHystory()"
+              ><i class="fa-solid fa-rotate-right"></i
+            ></a>
+            <p-dialog
+              header="Opciones del reporte"
+              [(visible)]="visible"
+              [modal]="true"
+              [style]="{ width: '70vw', height: '30vw' }"
+              [draggable]="false"
+              [resizable]="false"
+            >
+              <div class="row">
+                <form
+                  action="javascript:"
+                  class="was-validated"
+                  [formGroup]="updateFormGroup"
+                  (ngSubmit)="generateReport()"
+                >
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label for="user_id" class="form-label">ID paciente</label>
+                      <input
+                        type="number"
+                        class="form-control is-invalid"
+                        required
+                        id="user_id"
+                        placeholder="Ingrese su nombre"
+                        formControlName="user_id"
+                        value=""
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="init_date" class="form-label">De:</label>
+                      <input
+                        type="date"
+                        class="form-control is-invalid"
+                        required
+                        id="init_date"
+                        formControlName="init_date"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="end_date" class="form-label">Hasta:</label>
+                      <input
+                        type="date"
+                        class="form-control is-invalid"
+                        required
+                        id="end_date"
+                        formControlName="end_date"
+                      />
+                    </div>
+                    <div class="col-md-12 mt-3">
+                      <button class="btn btn-primary shadow" type="submit">
+                        Guardar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </p-dialog>
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <a (click)="showDialog()"><i class="fa-solid fa-file"></i></a>
+          </div>
+        </div>
         <table class="table display" id="yourTableId">
           <thead>
             <tr>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ResultService {
   private URL: string = 'http://127.0.0.1:5000/';
@@ -16,5 +16,9 @@ export class ResultService {
 
   public add_result(data: any): Observable<any> {
     return this.http.post(`${this.URL}result/add_result`, data);
+  }
+
+  public get_report(data: any): Observable<any> {
+    return this.http.post(`${this.URL}result/xxxx`, data);
   }
 }

@@ -25,6 +25,106 @@ export interface Navigation extends NavigationItem {
   children?: NavigationItem[];
 }
 
+const NavigationItemsPsy = [
+  {
+    id: 'navigation',
+    title: 'Navigation',
+    type: 'group',
+    icon: 'icon-navigation',
+    children: [
+      {
+        id: 'dashboard',
+        title: 'Dashboard',
+        type: 'item',
+        url: '/dashboard',
+        icon: 'feather icon-home',
+        classes: 'nav-item',
+      },
+    ],
+  },
+  {
+    id: 'Modulos',
+    title: 'Modulos',
+    type: 'group',
+    icon: 'icon-ui',
+    children: [
+      {
+        id: 'basic',
+        title: 'Administración',
+        type: 'collapse',
+        icon: 'feather icon-box',
+        children: [
+          {
+            id: 'modulo_citaciones',
+            title: 'Citaciones',
+            type: 'item',
+            url: '/basic/citaciones',
+          },
+          {
+            id: 'modulo_visitas',
+            title: 'Visitas',
+            type: 'item',
+            url: '/basic/basic-visitas',
+          },
+          {
+            id: 'modulo_resultados',
+            title: 'Resultados',
+            type: 'item',
+            url: '/basic/results',
+          },
+          {
+            id: 'modulo_historial',
+            title: 'Historial',
+            type: 'item',
+            url: '/basic/typography',
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const NavigationItemsOth = [
+  {
+    id: 'navigation',
+    title: 'Navigation',
+    type: 'group',
+    icon: 'icon-navigation',
+    children: [
+      // {
+      //   id: 'dashboard',
+      //   title: 'Dashboard',
+      //   type: 'item',
+      //   url: '/dashboard',
+      //   icon: 'feather icon-home',
+      //   classes: 'nav-item',
+      // },
+    ],
+  },
+  {
+    id: 'Modulos',
+    title: 'Modulos',
+    type: 'group',
+    icon: 'icon-ui',
+    children: [
+      {
+        id: 'basic',
+        title: 'Administración',
+        type: 'collapse',
+        icon: 'feather icon-box',
+        children: [
+          {
+            id: 'modulo_citaciones',
+            title: 'Citaciones',
+            type: 'item',
+            url: '/basic/citaciones',
+          },
+        ],
+      },
+    ],
+  },
+];
+
 const NavigationItems = [
   {
     id: 'navigation',
@@ -255,7 +355,39 @@ const NavigationItems = [
 
 @Injectable()
 export class NavigationItem {
+  constructor() {}
+
+  private rol: number = 0;
+
   get() {
-    return NavigationItems;
+    const token: string | null = localStorage.getItem('authToken');
+    if (token) {
+      this.rol = this.decodeToken(token).rol;
+      // console.log('Token Data:', this.rol);
+    } else {
+      console.log('No se encontró ningún token.');
+    }
+
+    if (this.rol === 2) {
+      return NavigationItemsPsy;
+    } else if (this.rol === 3 || this.rol === 4) {
+      return NavigationItemsOth
+    } else {
+      return NavigationItems;
+    }
+  }
+
+  private decodeToken(token: string): any {
+    try {
+      // Divide el token en partes (cabecera, payload, firma)
+      const payloadBase64 = token.split('.')[1];
+      // Decodifica la parte del payload
+      const decodedPayload = atob(payloadBase64);
+      // Convierte el payload decodificado a un objeto JSON
+      return JSON.parse(decodedPayload);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return null;
+    }
   }
 }

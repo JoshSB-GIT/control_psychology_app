@@ -65,7 +65,6 @@ export default class BasicTabsPillsComponent
       },
     );
     console.log(this.citationsData);
-    
   }
 
   public getResults(): void {
@@ -124,4 +123,6 @@ export default class BasicTabsPillsComponent
       },
     );
   }
+
+  public generateReport(): void {}
 }

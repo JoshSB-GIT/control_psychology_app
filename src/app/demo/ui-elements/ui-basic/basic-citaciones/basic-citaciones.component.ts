@@ -67,6 +67,7 @@ export default class BasicCitacionesComponent
     });
     this.getPatient();
     this.getPsycho();
+    this.get();
   }
 
   public showDialog(citation: any) {
@@ -74,7 +75,7 @@ export default class BasicCitacionesComponent
     if (citation) {
       this.selectedCitation = citation;
       console.log(this.selectedCitation);
-      
+
       this.citation_id = citation.citation_id;
     }
     console.log(this.citation_id);
@@ -271,5 +272,31 @@ export default class BasicCitacionesComponent
       } else if (result.isDenied) {
       }
     });
+  }
+
+  public rol: number = 0;
+
+  get() {
+    const token: string | null = localStorage.getItem('authToken');
+    if (token) {
+      this.rol = this.decodeToken(token).rol;
+      console.log('Token Data ss  :', this.rol);
+    } else {
+      console.log('No se encontró ningún token.');
+    }
+  }
+
+  private decodeToken(token: string): any {
+    try {
+      // Divide el token en partes (cabecera, payload, firma)
+      const payloadBase64 = token.split('.')[1];
+      // Decodifica la parte del payload
+      const decodedPayload = atob(payloadBase64);
+      // Convierte el payload decodificado a un objeto JSON
+      return JSON.parse(decodedPayload);
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+      return null;
+    }
   }
 }
